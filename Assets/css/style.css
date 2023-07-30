@@ -4,11 +4,42 @@
   margin: 0;
 }
 header {
-  background-color: lightskyblue;
+  background-color: darkslateblue;
   padding: 20px;
 }
 h1 {
   display: flexbox;
   color: white;
   text-align: center;
+}
+#searchsec {
+  margin-left: 20px;
+  padding-left: 20px;
+  float: left;
+  width: 300px;
+}
+#searchsec input[type="text"] {
+  float: none;
+  display: block;
+  margin: 0;
+  padding: 5px;
+  font-size: medium;
+  text-align: left;
+  width: 275px;
+}
+#searchbut {
+  background-color: deepskyblue;
+  color: white;
+}
+button {
+  background-color: deepskyblue;
+  border: none;
+  color: black;
+  background-color: gray;
+  padding: 5px 110px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
