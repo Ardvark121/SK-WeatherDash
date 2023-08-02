@@ -1,19 +1,22 @@
+//Set all the constants such as the API key and link consts to html elements to be call upon in the js
 const APIKey = "5ffe6b0e29acb3a5be9840d2de5815c4";
-var APILatLonURL = "http://api.openweathermap.org/geo/1.0/direct?q=";
 const SearchButton = $("button");
 const SearchText = $("input");
 const Mainbox = $("#Displaybox");
 const Forecast = $("#Forecast");
 
+//Listens for any button elemt to be clicked
 SearchButton.on("click", function () {
+  //Gets the name of the button clicked
   var InputText = $(this).text();
   if (InputText == "Search") {
+    //switches the input to the typed sting if they hit the button named search
     InputText = SearchText.val();
-    GetLatLon();
+    GetLatLonWeather();
   } else {
-    GetLatLon();
+    GetLatLonWeather();
   }
-  function GetLatLon() {
+  function GetLatLonWeather() {
     fetch(
       "http://api.openweathermap.org/geo/1.0/direct?q=" +
         InputText +
@@ -26,6 +29,7 @@ SearchButton.on("click", function () {
       .then(function (data) {
         Mainbox.children().remove();
         Forecast.children().remove();
+        Mainbox.text("Please check spelling or choose another city");
         var LatLon = {
           lat: data[0].lat,
           lon: data[0].lon,
@@ -46,6 +50,7 @@ SearchButton.on("click", function () {
             return response1.json();
           })
           .then(function (Weather) {
+            Mainbox.text("");
             const City = $("<h3>");
             const Temp = $("<p>");
             const Wind = $("<p>");
