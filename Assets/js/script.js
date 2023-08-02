@@ -3,6 +3,7 @@ var APILatLonURL = "http://api.openweathermap.org/geo/1.0/direct?q=";
 const SearchButton = $("button");
 const SearchText = $("input");
 const Mainbox = $("#Displaybox");
+const Forecast = $("#Forecast");
 
 SearchButton.on("click", function () {
   var InputText = $(this).text();
@@ -24,6 +25,7 @@ SearchButton.on("click", function () {
       })
       .then(function (data) {
         Mainbox.children().remove();
+        Forecast.children().remove();
         var LatLon = {
           lat: data[0].lat,
           lon: data[0].lon,
@@ -58,6 +60,27 @@ SearchButton.on("click", function () {
             Mainbox.append(Temp);
             Mainbox.append(Wind);
             Mainbox.append(Humid);
+            console.log(Weather);
+            for (let i = 1; i < 39; i += 8) {
+              const forebox = $("<td>");
+              const foredate = $("<b>");
+              const foreTemp = $("<p>");
+              const foreWind = $("<p>");
+              const foreHumid = $("<p>");
+              foredate.text(Weather.list[i].dt_txt.slice(0, 10));
+              foreTemp.text("Tempurature: " + Weather.list[i].main.temp + "°F");
+              foreWind.text(
+                "Wind Speed: " + Weather.list[i].wind.speed + "MPH"
+              );
+              foreHumid.text(
+                "Humidity: " + Weather.list[i].main.humidity + "%"
+              );
+              forebox.append(foredate);
+              forebox.append(foreTemp);
+              forebox.append(foreWind);
+              forebox.append(foreHumid);
+              Forecast.append(forebox);
+            }
           });
       });
   }
