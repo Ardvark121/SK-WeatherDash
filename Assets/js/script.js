@@ -18,9 +18,9 @@ SearchButton.on("click", function () {
     GetLatLonWeather();
   }
   function GetLatLonWeather() {
-    // Plugs in the API uses the name of a city as input and outputs the latitude and longitude 
+    // Plugs in the API uses the name of a city as input and outputs the latitude and longitude
     fetch(
-      "http://api.openweathermap.org/geo/1.0/direct?q=" +
+      "https://api.openweathermap.org/geo/1.0/direct?q=" +
         InputText +
         "&limit=1&appid=" +
         APIKey
