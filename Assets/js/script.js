@@ -12,11 +12,13 @@ SearchButton.on("click", function () {
   if (InputText == "Search") {
     //switches the input to the typed sting if they hit the button named search
     InputText = SearchText.val();
+    //Activates the next function
     GetLatLonWeather();
   } else {
     GetLatLonWeather();
   }
   function GetLatLonWeather() {
+    // Plugs in the API uses the name of a city as input and outputs the latitude and longitude 
     fetch(
       "http://api.openweathermap.org/geo/1.0/direct?q=" +
         InputText +
@@ -27,8 +29,10 @@ SearchButton.on("click", function () {
         return response.json();
       })
       .then(function (data) {
+        //Clears the all the boxes on the right side
         Mainbox.children().remove();
         Forecast.children().remove();
+        // Adds error message to be taken out later if everyfunction is sucsessful
         Mainbox.text("Please check spelling or choose another city");
         var LatLon = {
           lat: data[0].lat,
@@ -37,6 +41,7 @@ SearchButton.on("click", function () {
         return LatLon;
       })
       .then(function (LatLon) {
+        // Plugs in the API uses the latitude and longitude and outputs Weather data
         fetch(
           "https://api.openweathermap.org/data/2.5/forecast?lat=" +
             LatLon.lat +
@@ -50,28 +55,34 @@ SearchButton.on("click", function () {
             return response1.json();
           })
           .then(function (Weather) {
+            // Erases error message
             Mainbox.text("");
+            //Sets consts elemnts
             const City = $("<h3>");
             const Temp = $("<p>");
             const Wind = $("<p>");
             const Humid = $("<p>");
+            //Adds texts to those elemts
             City.text(
               Weather.city.name + " " + Weather.list[0].dt_txt.slice(0, 10)
             );
             Temp.text("Tempurature: " + Weather.list[0].main.temp + "°F");
             Wind.text("Wind Speed: " + Weather.list[0].wind.speed + "MPH");
             Humid.text("Humidity: " + Weather.list[0].main.humidity + "%");
+            //Adds those elemnts to the mainbox of the page
             Mainbox.append(City);
             Mainbox.append(Temp);
             Mainbox.append(Wind);
             Mainbox.append(Humid);
-            console.log(Weather);
+            // Adds 8 because thats how many seperates values stored in the array from the API in a day
             for (let i = 1; i < 39; i += 8) {
+              //Sets consts elemnts
               const forebox = $("<td>");
               const foredate = $("<b>");
               const foreTemp = $("<p>");
               const foreWind = $("<p>");
               const foreHumid = $("<p>");
+              //Adds texts to those elemts
               foredate.text(Weather.list[i].dt_txt.slice(0, 10));
               foreTemp.text("Tempurature: " + Weather.list[i].main.temp + "°F");
               foreWind.text(
@@ -80,6 +91,7 @@ SearchButton.on("click", function () {
               foreHumid.text(
                 "Humidity: " + Weather.list[i].main.humidity + "%"
               );
+              //Adds those elemnts to the Forecast section of the page
               forebox.append(foredate);
               forebox.append(foreTemp);
               forebox.append(foreWind);
